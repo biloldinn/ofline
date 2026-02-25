@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Reels - Premium To'lov</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="payment-page">
+        <div class="payment-card">
+            <div class="payment-header">
+                <h2><i class="fas fa-crown"></i> Premium Obuna</h2>
+                <p>Offline Reels imtiyozlaridan to'liq foydalaning</p>
+            </div>
+
+            <div class="payment-body">
+                <!-- Timer -->
+                <div class="timer-box">
+                    <div class="timer-label">To'lov uchun qolgan vaqt</div>
+                    <div class="timer" id="timer">15:00</div>
+                </div>
+
+                <!-- Plan Selection -->
+                <div class="plan-selector">
+                    <div class="plan-option selected" id="planMonthly" onclick="selectPlan('monthly')">
+                        <div class="plan-name">1 OYLIK</div>
+                        <div class="plan-price">20,000 so'm</div>
+                        <div class="plan-old-price">25,000 so'm</div>
+                    </div>
+                    <div class="plan-option" id="planQuarterly" onclick="selectPlan('quarterly')">
+                        <div class="plan-name">3 OYLIK</div>
+                        <div class="plan-price">50,000 so'm</div>
+                        <div class="plan-old-price">60,000 so'm</div>
+                    </div>
+                </div>
+
+                <!-- Card Information -->
+                <div class="card-info">
+                    <div class="card-number">
+                        <span>9860 3566 3419 9596</span>
+                        <button class="copy-btn" onclick="copyCardNumber()">
+                            <i class="fas fa-copy"></i> Nusxalash
+                        </button>
+                    </div>
+                    <div class="card-holder">
+                        Qabul qiluvchi:
+                        <strong>Turg'unboyev Biloliddin</strong>
+                    </div>
+                </div>
+
+                <!-- Payment Form -->
+                <form id="paymentForm" onsubmit="submitPayment(event)">
+                    <div class="input-group">
+                        <label><i class="fas fa-user"></i> Login (Telefon yoki username)</label>
+                        <input type="text" id="login" placeholder="Loginingizni kiriting" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-comment"></i> Izoh (ixtiyoriy)</label>
+                        <input type="text" id="comment" placeholder="To'lov haqida izoh">
+                    </div>
+
+                    <div class="input-group">
+                        <label><i class="fas fa-image"></i> To'lov cheki rasmi</label>
+                        <div class="file-upload" onclick="document.getElementById('checkPhoto').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Chek rasmini yuklash uchun bosing</p>
+                            <input type="file" id="checkPhoto" accept="image/*" style="display: none;"
+                                onchange="handleFileSelect(event)">
+                            <div id="fileName" class="file-name"></div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-pay">
+                        <i class="fas fa-paper-plane"></i> To'lovni yuborish
+                    </button>
+                </form>
+
+                <button class="btn-secondary" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i> Orqaga qaytish
+                </button>
+
+                <div class="developer-footer">
+                    <p>Dasturchi: Turg'unboyev Biloliddin</p>
+                    <a href="https://t.me/Dasturchi_bt" target="_blank" class="telegram-small">
+                        <i class="fab fa-telegram"></i> @Dasturchi_bt
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = 'monthly';
+        let selectedAmount = 20000;
+        let selectedMonths = 1;
+        let timer;
+        let timeLeft = 15 * 60; // 15 minutes in seconds
+
+        // Timer function
+        function startTimer() {
+            timer = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.getElementById('timer').textContent = '00:00';
+                    alert('Vaqt tugadi! Iltimos, qaytadan urinib ko\'ring.');
+                    return;
+                }
+
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent =
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        // Plan selection
+        function selectPlan(plan) {
+            selectedPlan = plan;
+
+            if (plan === 'monthly') {
+                selectedAmount = 20000;
+                selectedMonths = 1;
+                document.getElementById('planMonthly').classList.add('selected');
+                document.getElementById('planQuarterly').classList.remove('selected');
+            } else {
+                selectedAmount = 50000;
+                selectedMonths = 3;
+                document.getElementById('planQuarterly').classList.add('selected');
+                document.getElementById('planMonthly').classList.remove('selected');
+            }
+        }
+
+        // Copy card number
+        function copyCardNumber() {
+            const cardNumber = '9860 3566 3419 9596';
+            navigator.clipboard.writeText(cardNumber).then(() => {
+                alert('✅ Karta raqam nusxalandi');
+            });
+        }
+
+        // File selection
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('fileName').textContent = `📸 ${file.name}`;
+            }
+        }
+
+        // Submit payment
+        function submitPayment(event) {
+            event.preventDefault();
+
+            const login = document.getElementById('login').value;
+            const comment = document.getElementById('comment').value;
+            const checkPhoto = document.getElementById('checkPhoto').files[0];
+
+            if (!login) {
+                alert('❌ Loginingizni kiriting');
+                return;
+            }
+
+            if (!checkPhoto) {
+                alert('❌ Chek rasmini yuklang');
+                return;
+            }
+
+            // Show loading
+            const btn = event.target.querySelector('.btn-pay');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Yuborilmoqda...';
+            btn.disabled = true;
+
+            // Prepare form data
+            const formData = new FormData();
+            formData.append('login', login);
+            formData.append('comment', comment);
+            formData.append('amount', selectedAmount);
+            formData.append('months', selectedMonths);
+            formData.append('checkPhoto', checkPhoto);
+
+            // Send to server
+            fetch('/api/payments', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = 'success.html?paymentId=' + data.paymentId;
+                    } else {
+                        alert('❌ Xatolik yuz berdi: ' + data.message);
+                        btn.innerHTML = '<i class="fas fa-paper-plane"></i> To\'lovni yuborish';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('❌ Xatolik yuz berdi');
+                    btn.innerHTML = '<i class="fas fa-paper-plane"></i> To\'lovni yuborish';
+                    btn.disabled = false;
+                });
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Start timer on page load
+        startTimer();
+    </script>
+</body>
+
+</html>

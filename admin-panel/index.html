@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline Reels - Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <h2>Admin Panel</h2>
+                <p>Offline Reels boshqaruv tizimi</p>
+            </div>
+
+            <form id="loginForm">
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Login</label>
+                    <input type="text" id="username" placeholder="Login" value="bilol006">
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> Parol</label>
+                    <input type="password" id="password" placeholder="Parol" value="bilol006">
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Kirish
+                </button>
+            </form>
+
+            <div class="developer-info">
+                <p>Dasturchi: Turg'unboyev Biloliddin</p>
+                <a href="https://t.me/Dasturchi_bt" target="_blank" class="telegram-link">
+                    <i class="fab fa-telegram"></i> @Dasturchi_bt
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === 'bilol006' && password === 'bilol006') {
+                window.location.href = 'dashboard.html';
+            } else {
+                alert('Login yoki parol noto\'g\'ri!');
+            }
+        });
+    </script>
+</body>
+
+</html>

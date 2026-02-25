@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Offline Reels Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2><i class="fas fa-crown" style="color: #667eea;"></i> Offline Reels Admin</h2>
+            </div>
+            <div class="header-right">
+                <div class="admin-profile" onclick="toggleProfileMenu()">
+                    <div class="admin-avatar">A</div>
+                    <span>Admin</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="dashboard.html" class="active">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Foydalanuvchilar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-credit-card"></i>
+                        <span>To'lovlar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-video"></i>
+                        <span>Videolar</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Statistika</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-cog"></i>
+                        <span>Sozlamalar</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Statistics Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Jami foydalanuvchilar</span>
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="totalUsers">1,234</div>
+                    <div class="stat-change">
+                        <i class="fas fa-arrow-up"></i> +12% (oxirgi 7 kun)
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Premium foydalanuvchilar</span>
+                        <div class="stat-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="premiumUsers">456</div>
+                    <div class="stat-change">
+                        <i class="fas fa-arrow-up"></i> +8% (oxirgi 7 kun)
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Kutilayotgan to'lovlar</span>
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="pendingPayments">23</div>
+                    <div class="stat-change">
+                        <i class="fas fa-exclamation-circle"></i> 5 ta yangi
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <span class="stat-title">Jami to'lovlar</span>
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill"></i>
+                        </div>
+                    </div>
+                    <div class="stat-value" id="totalAmount">12.3M so'm</div>
+                    <div class="stat-change">
+                        <i class="fas fa-arrow-up"></i> +23% (oxirgi 30 kun)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Payments Table -->
+            <div class="table-container">
+                <div class="table-header">
+                    <h3><i class="fas fa-history"></i> So'nggi to'lovlar</h3>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Qidirish...">
+                    </div>
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Foydalanuvchi</th>
+                            <th>Telefon</th>
+                            <th>Summa</th>
+                            <th>Muddat</th>
+                            <th>Vaqt</th>
+                            <th>Holat</th>
+                            <th>Amal</th>
+                        </tr>
+                    </thead>
+                    <tbody id="recentPayments">
+                        <tr>
+                            <td>Biloliddin T.</td>
+                            <td>+998901234567</td>
+                            <td>20,000 so'm</td>
+                            <td>1 oy</td>
+                            <td>10:30 25.02.2026</td>
+                            <td><span class="status-badge status-pending">Kutilmoqda</span></td>
+                            <td>
+                                <button class="btn-action btn-view" onclick="viewPayment('1')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-action btn-approve" onclick="approvePayment('1')">
+                                    <i class="fas fa-check"></i>
+                                </button>
+                                <button class="btn-action btn-reject" onclick="rejectPayment('1')">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alisher N.</td>
+                            <td>+998901234568</td>
+                            <td>50,000 so'm</td>
+                            <td>3 oy</td>
+                            <td>09:15 25.02.2026</td>
+                            <td><span class="status-badge status-approved">Tasdiqlangan</span></td>
+                            <td>
+                                <button class="btn-action btn-view" onclick="viewPayment('2')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Madina R.</td>
+                            <td>+998901234569</td>
+                            <td>20,000 so'm</td>
+                            <td>1 oy</td>
+                            <td>08:45 25.02.2026</td>
+                            <td><span class="status-badge status-rejected">Rad etilgan</span></td>
+                            <td>
+                                <button class="btn-action btn-view" onclick="viewPayment('3')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Payment View Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>To'lov ma'lumotlari</h3>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="paymentDetails">
+                <p><strong>Foydalanuvchi:</strong> <span id="modalUser">Biloliddin T.</span></p>
+                <p><strong>Telefon:</strong> <span id="modalPhone">+998901234567</span></p>
+                <p><strong>Summa:</strong> <span id="modalAmount">20,000 so'm</span></p>
+                <p><strong>Muddat:</strong> <span id="modalMonths">1 oy</span></p>
+                <p><strong>Izoh:</strong> <span id="modalComment">To'lov qildim</span></p>
+                <img src="https://via.placeholder.com/400x600?text=Chek+Rasmi" alt="Chek" class="check-image"
+                    id="modalImage">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-action btn-approve" style="flex: 1;" onclick="approveCurrent()">
+                    <i class="fas fa-check"></i> Tasdiqlash
+                </button>
+                <button class="btn-action btn-reject" style="flex: 1;" onclick="rejectCurrent()">
+                    <i class="fas fa-times"></i> Rad etish
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPaymentId = '';
+
+        function logout() {
+            window.location.href = 'index.html';
+        }
+
+        function viewPayment(id) {
+            currentPaymentId = id;
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function approvePayment(id) {
+            if (confirm('To\'lovni tasdiqlaysizmi?')) {
+                alert('✅ To\'lov tasdiqlandi');
+                location.reload();
+            }
+        }
+
+        function rejectPayment(id) {
+            if (confirm('To\'lovni rad etasizmi?')) {
+                alert('❌ To\'lov rad etildi');
+                location.reload();
+            }
+        }
+
+        function approveCurrent() {
+            approvePayment(currentPaymentId);
+            closeModal();
+        }
+
+        function rejectCurrent() {
+            rejectPayment(currentPaymentId);
+            closeModal();
+        }
+
+        function toggleProfileMenu() {
+            // Profile menu toggle
+        }
+
+        // Load statistics from server
+        function loadStats() {
+            // API call to get real data
+            fetch('/api/admin/stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('totalUsers').textContent = data.totalUsers;
+                    document.getElementById('premiumUsers').textContent = data.premiumUsers;
+                    document.getElementById('pendingPayments').textContent = data.pendingPayments;
+                    document.getElementById('totalAmount').textContent = data.totalAmount + ' so\'m';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+
+        // Load stats on page load
+        loadStats();
+    </script>
+</body>
+
+</html>

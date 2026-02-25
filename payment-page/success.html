@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To'lov yuborildi - Offline Reels</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .success-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            text-align: center;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 40px auto 20px;
+            color: white;
+            font-size: 50px;
+            animation: bounce 1s ease;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .success-card h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .success-card p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 30px;
+            padding: 0 30px;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 0 30px 30px;
+            text-align: left;
+        }
+
+        .info-box p {
+            margin-bottom: 10px;
+            padding: 0;
+        }
+
+        .info-box strong {
+            color: #333;
+        }
+
+        .btn-home {
+            display: inline-block;
+            padding: 14px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+        }
+
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .payment-id {
+            color: #999;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="success-page">
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>✅ To'lov yuborildi!</h2>
+            <p>Sizning to'lov so'rovingiz qabul qilindi. Admin tekshirgach premium imtiyozlar ochiladi.</p>
+
+            <div class="info-box">
+                <p><strong>To'lov ID:</strong> <span id="paymentId">OR-2025-001234</span></p>
+                <p><strong>Holati:</strong> <span style="color: #FFB74D;">⏳ Tekshirilmoqda</span></p>
+                <p><strong>Vaqt:</strong> <span id="paymentTime">25.02.2026 11:30</span></p>
+                <p><strong>Kutilgan vaqt:</strong> 5-10 daqiqa</p>
+            </div>
+
+            <p class="payment-id">Bu ID ni saqlab qo'ying</p>
+
+            <a href="https://t.me/Dasturchi_bt" target="_blank" class="btn-home">
+                <i class="fab fa-telegram"></i> @Dasturchi_bt
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Get payment ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('paymentId');
+
+        if (paymentId) {
+            document.getElementById('paymentId').textContent = 'OR-' + paymentId;
+        }
+
+        // Set current time
+        const now = new Date();
+        document.getElementById('paymentTime').textContent =
+            `${now.getDate().toString().padStart(2, '0')}.${(now.getMonth() + 1).toString().padStart(2, '0')}.${now.getFullYear()} ${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+    </script>
+</body>
+
+</html>
