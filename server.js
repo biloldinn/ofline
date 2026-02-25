@@ -14,8 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/admin', express.static(path.join(__dirname, '../admin-panel')));
-app.use('/payment', express.static(path.join(__dirname, '../payment-page')));
+app.use('/admin', express.static(path.join(__dirname, 'admin-panel')));
+app.use('/payment', express.static(path.join(__dirname, 'payment-page')));
 
 // Redirect root to payment page
 app.get('/', (req, res) => {
@@ -240,7 +240,7 @@ app.get('/api/payments/:id/status', async (req, res) => {
 // Handle all other admin routes by serving the requested file
 app.get('/admin/:page', (req, res) => {
     const page = req.params.page;
-    const filePath = path.join(__dirname, '../admin-panel', page);
+    const filePath = path.join(__dirname, 'admin-panel', page);
     if (fs.existsSync(filePath)) {
         res.sendFile(filePath);
     } else {
