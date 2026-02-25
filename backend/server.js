@@ -86,7 +86,18 @@ const upload = multer({
 
 // ========== API ROUTES ==========
 
-// 1. Payment submission
+// 1. Admin Login
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+    // For simplicity, using hardcoded credentials in backend (should be in DB in production)
+    if (username === 'bilol006' && password === 'bilol006') {
+        res.json({ success: true, message: 'Kirish muvaffaqiyatli' });
+    } else {
+        res.status(401).json({ success: false, message: 'Login yoki parol noto\'g\'ri!' });
+    }
+});
+
+// 2. Payment submission
 app.post('/api/payments', upload.single('checkPhoto'), async (req, res) => {
     try {
         const { login, comment, amount, months } = req.body;
@@ -112,7 +123,7 @@ app.post('/api/payments', upload.single('checkPhoto'), async (req, res) => {
     }
 });
 
-// 2. Get all payments (admin)
+// 3. Get all payments (admin)
 app.get('/api/admin/payments', async (req, res) => {
     try {
         const payments = await Payment.find().sort({ createdAt: -1 });
@@ -122,7 +133,27 @@ app.get('/api/admin/payments', async (req, res) => {
     }
 });
 
-// 3. Approve payment
+// 4. Get all users (admin)
+app.get('/api/admin/users', async (req, res) => {
+    try {
+        const users = await User.find().sort({ createdAt: -1 });
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// 5. Delete user
+app.delete('/api/admin/users/:id', async (req, res) => {
+    try {
+        await User.findByIdAndDelete(req.params.id);
+        res.json({ success: true, message: 'Foydalanuvchi o\'chirildi' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// 6. Approve payment
 app.post('/api/admin/payments/:id/approve', async (req, res) => {
     try {
         const payment = await Payment.findById(req.params.id);
@@ -135,14 +166,21 @@ app.post('/api/admin/payments/:id/approve', async (req, res) => {
         await payment.save();
 
         // Update user premium status
-        const user = await User.findOne({ login: payment.login });
-        if (user) {
-            user.premium = true;
-            const untilDate = new Date();
-            untilDate.setMonth(untilDate.getMonth() + payment.months);
-            user.premiumUntil = untilDate;
-            await user.save();
+        let user = await User.findOne({ login: payment.login });
+        if (!user) {
+            // Create user if not exists (for testing/demo)
+            user = new User({
+                login: payment.login,
+                premium: true,
+                premiumUntil: new Date()
+            });
         }
+
+        user.premium = true;
+        const untilDate = user.premiumUntil && user.premiumUntil > new Date() ? new Date(user.premiumUntil) : new Date();
+        untilDate.setMonth(untilDate.getMonth() + payment.months);
+        user.premiumUntil = untilDate;
+        await user.save();
 
         res.json({ success: true, message: 'Payment approved' });
     } catch (error) {
@@ -150,7 +188,7 @@ app.post('/api/admin/payments/:id/approve', async (req, res) => {
     }
 });
 
-// 4. Reject payment
+// 7. Reject payment
 app.post('/api/admin/payments/:id/reject', async (req, res) => {
     try {
         const payment = await Payment.findById(req.params.id);
@@ -168,7 +206,7 @@ app.post('/api/admin/payments/:id/reject', async (req, res) => {
     }
 });
 
-// 5. Get stats (admin)
+// 8. Get stats (admin)
 app.get('/api/admin/stats', async (req, res) => {
     try {
         const totalUsers = await User.countDocuments();
@@ -189,13 +227,24 @@ app.get('/api/admin/stats', async (req, res) => {
     }
 });
 
-// 6. Check payment status
+// 9. Check payment status
 app.get('/api/payments/:id/status', async (req, res) => {
     try {
         const payment = await Payment.findById(req.params.id);
         res.json({ status: payment ? payment.status : 'not_found' });
     } catch (error) {
         res.status(500).json({ message: error.message });
+    }
+});
+
+// Handle all other admin routes by serving the requested file
+app.get('/admin/:page', (req, res) => {
+    const page = req.params.page;
+    const filePath = path.join(__dirname, '../admin-panel', page);
+    if (fs.existsSync(filePath)) {
+        res.sendFile(filePath);
+    } else {
+        res.status(404).send('Sahifa topilmadi');
     }
 });
 

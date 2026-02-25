@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="uz">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To'lovlar - Offline Reels Admin</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard">
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2><i class="fas fa-crown" style="color: #667eea;"></i> Offline Reels Admin</h2>
+            </div>
+            <div class="header-right">
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul class="sidebar-menu">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i><span>Foydalanuvchilar</span></a></li>
+                <li><a href="payments.html" class="active"><i class="fas fa-credit-card"></i><span>To'lovlar</span></a>
+                </li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <div class="table-container">
+                <div class="table-header">
+                    <h3><i class="fas fa-credit-card"></i> Barcha to'lovlar</h3>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Foydalanuvchi</th>
+                            <th>Summa</th>
+                            <th>Muddat</th>
+                            <th>Holat</th>
+                            <th>Amallar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="paymentTable"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        if (localStorage.getItem('admin_logged_in') !== 'true') window.location.href = 'index.html';
+
+        function logout() {
+            localStorage.removeItem('admin_logged_in');
+            window.location.href = 'index.html';
+        }
+
+        function loadPayments() {
+            fetch('/api/admin/payments')
+                .then(res => res.json())
+                .then(payments => {
+                    const tbody = document.getElementById('paymentTable');
+                    tbody.innerHTML = '';
+                    payments.forEach(p => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${p.login}</td>
+                            <td>${p.amount.toLocaleString()} so'm</td>
+                            <td>${p.months} oy</td>
+                            <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                            <td>
+                                ${p.status === 'pending' ? `
+                                <button class="btn-action btn-approve" onclick="actionPayment('${p._id}', 'approve')"><i class="fas fa-check"></i></button>
+                                <button class="btn-action btn-reject" onclick="actionPayment('${p._id}', 'reject')"><i class="fas fa-times"></i></button>
+                                ` : '-'}
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                });
+        }
+
+        function actionPayment(id, action) {
+            fetch(`/api/admin/payments/${id}/${action}`, { method: 'POST' })
+                .then(() => loadPayments());
+        }
+
+        loadPayments();
+    </script>
+</body>
+
+</html>

@@ -13,13 +13,12 @@
 
 <body>
     <div class="dashboard">
-        <!-- Header -->
         <header class="dashboard-header">
             <div class="header-left">
                 <h2><i class="fas fa-crown" style="color: #667eea;"></i> Offline Reels Admin</h2>
             </div>
             <div class="header-right">
-                <div class="admin-profile" onclick="toggleProfileMenu()">
+                <div class="admin-profile">
                     <div class="admin-avatar">A</div>
                     <span>Admin</span>
                 </div>
@@ -29,120 +28,50 @@
             </div>
         </header>
 
-        <!-- Sidebar -->
         <nav class="sidebar">
             <ul class="sidebar-menu">
-                <li>
-                    <a href="dashboard.html" class="active">
-                        <i class="fas fa-home"></i>
-                        <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="users.html">
-                        <i class="fas fa-users"></i>
-                        <span>Foydalanuvchilar</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="payments.html">
-                        <i class="fas fa-credit-card"></i>
-                        <span>To'lovlar</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-video"></i>
-                        <span>Videolar</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-chart-bar"></i>
-                        <span>Statistika</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fas fa-cog"></i>
-                        <span>Sozlamalar</span>
-                    </a>
-                </li>
+                <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+                <li><a href="users.html"><i class="fas fa-users"></i><span>Foydalanuvchilar</span></a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i><span>To'lovlar</span></a></li>
             </ul>
         </nav>
 
-        <!-- Main Content -->
         <main class="main-content">
-            <!-- Statistics Cards -->
             <div class="stats-grid">
                 <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-title">Jami foydalanuvchilar</span>
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
+                    <div class="stat-header"><span class="stat-title">Jami foydalanuvchilar</span>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
                     </div>
-                    <div class="stat-value" id="totalUsers">1,234</div>
-                    <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i> +12% (oxirgi 7 kun)
-                    </div>
+                    <div class="stat-value" id="totalUsers">0</div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-title">Premium foydalanuvchilar</span>
-                        <div class="stat-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
+                    <div class="stat-header"><span class="stat-title">Premium foydalanuvchilar</span>
+                        <div class="stat-icon"><i class="fas fa-crown"></i></div>
                     </div>
-                    <div class="stat-value" id="premiumUsers">456</div>
-                    <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i> +8% (oxirgi 7 kun)
-                    </div>
+                    <div class="stat-value" id="premiumUsers">0</div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-title">Kutilayotgan to'lovlar</span>
-                        <div class="stat-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
+                    <div class="stat-header"><span class="stat-title">Kutilayotgan to'lovlar</span>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
                     </div>
-                    <div class="stat-value" id="pendingPayments">23</div>
-                    <div class="stat-change">
-                        <i class="fas fa-exclamation-circle"></i> 5 ta yangi
-                    </div>
+                    <div class="stat-value" id="pendingPayments">0</div>
                 </div>
-
                 <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-title">Jami to'lovlar</span>
-                        <div class="stat-icon">
-                            <i class="fas fa-money-bill"></i>
-                        </div>
+                    <div class="stat-header"><span class="stat-title">Jami to'lovlar</span>
+                        <div class="stat-icon"><i class="fas fa-money-bill"></i></div>
                     </div>
-                    <div class="stat-value" id="totalAmount">12.3M so'm</div>
-                    <div class="stat-change">
-                        <i class="fas fa-arrow-up"></i> +23% (oxirgi 30 kun)
-                    </div>
+                    <div class="stat-value" id="totalAmount">0 so'm</div>
                 </div>
             </div>
 
-            <!-- Recent Payments Table -->
             <div class="table-container">
                 <div class="table-header">
                     <h3><i class="fas fa-history"></i> So'nggi to'lovlar</h3>
-                    <div class="search-box">
-                        <i class="fas fa-search"></i>
-                        <input type="text" placeholder="Qidirish...">
-                    </div>
                 </div>
-
                 <table>
                     <thead>
                         <tr>
                             <th>Foydalanuvchi</th>
-                            <th>Telefon</th>
                             <th>Summa</th>
                             <th>Muddat</th>
                             <th>Vaqt</th>
@@ -150,53 +79,7 @@
                             <th>Amal</th>
                         </tr>
                     </thead>
-                    <tbody id="recentPayments">
-                        <tr>
-                            <td>Biloliddin T.</td>
-                            <td>+998901234567</td>
-                            <td>20,000 so'm</td>
-                            <td>1 oy</td>
-                            <td>10:30 25.02.2026</td>
-                            <td><span class="status-badge status-pending">Kutilmoqda</span></td>
-                            <td>
-                                <button class="btn-action btn-view" onclick="viewPayment('1')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="btn-action btn-approve" onclick="approvePayment('1')">
-                                    <i class="fas fa-check"></i>
-                                </button>
-                                <button class="btn-action btn-reject" onclick="rejectPayment('1')">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alisher N.</td>
-                            <td>+998901234568</td>
-                            <td>50,000 so'm</td>
-                            <td>3 oy</td>
-                            <td>09:15 25.02.2026</td>
-                            <td><span class="status-badge status-approved">Tasdiqlangan</span></td>
-                            <td>
-                                <button class="btn-action btn-view" onclick="viewPayment('2')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Madina R.</td>
-                            <td>+998901234569</td>
-                            <td>20,000 so'm</td>
-                            <td>1 oy</td>
-                            <td>08:45 25.02.2026</td>
-                            <td><span class="status-badge status-rejected">Rad etilgan</span></td>
-                            <td>
-                                <button class="btn-action btn-view" onclick="viewPayment('3')">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="recentPayments"></tbody>
                 </table>
             </div>
         </main>
@@ -206,89 +89,97 @@
     <div class="modal" id="paymentModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>To'lov ma'lumotlari</h3>
-                <span class="close-btn" onclick="closeModal()">&times;</span>
+                <h3>To'lov ma'lumotlari</h3><span class="close-btn" onclick="closeModal()">&times;</span>
             </div>
             <div id="paymentDetails">
-                <p><strong>Foydalanuvchi:</strong> <span id="modalUser">Biloliddin T.</span></p>
-                <p><strong>Telefon:</strong> <span id="modalPhone">+998901234567</span></p>
-                <p><strong>Summa:</strong> <span id="modalAmount">20,000 so'm</span></p>
-                <p><strong>Muddat:</strong> <span id="modalMonths">1 oy</span></p>
-                <p><strong>Izoh:</strong> <span id="modalComment">To'lov qildim</span></p>
-                <img src="https://via.placeholder.com/400x600?text=Chek+Rasmi" alt="Chek" class="check-image"
-                    id="modalImage">
+                <p><strong>Foydalanuvchi:</strong> <span id="modalUser"></span></p>
+                <p><strong>Telefon:</strong> <span id="modalPhone"></span></p>
+                <p><strong>Summa:</strong> <span id="modalAmount"></span></p>
+                <p><strong>Muddat:</strong> <span id="modalMonths"></span></p>
+                <p><strong>Izoh:</strong> <span id="modalComment"></span></p>
+                <img src="" alt="Chek" class="check-image" id="modalImage">
             </div>
             <div class="modal-actions">
-                <button class="btn-action btn-approve" style="flex: 1;" onclick="approveCurrent()">
-                    <i class="fas fa-check"></i> Tasdiqlash
-                </button>
-                <button class="btn-action btn-reject" style="flex: 1;" onclick="rejectCurrent()">
-                    <i class="fas fa-times"></i> Rad etish
-                </button>
+                <button class="btn-action btn-approve" style="flex: 1;" onclick="approveCurrent()"><i
+                        class="fas fa-check"></i> Tasdiqlash</button>
+                <button class="btn-action btn-reject" style="flex: 1;" onclick="rejectCurrent()"><i
+                        class="fas fa-times"></i> Rad etish</button>
             </div>
         </div>
     </div>
 
     <script>
+        if (localStorage.getItem('admin_logged_in') !== 'true') window.location.href = 'index.html';
+
         let currentPaymentId = '';
 
         function logout() {
+            localStorage.removeItem('admin_logged_in');
             window.location.href = 'index.html';
         }
 
-        function viewPayment(id) {
+        function viewPayment(id, image, user, phone, amount, months, comment) {
             currentPaymentId = id;
+            document.getElementById('modalUser').textContent = user;
+            document.getElementById('modalPhone').textContent = phone || 'N/A';
+            document.getElementById('modalAmount').textContent = amount.toLocaleString() + ' so\'m';
+            document.getElementById('modalMonths').textContent = months + ' oy';
+            document.getElementById('modalComment').textContent = comment || 'Izohsiz';
+            document.getElementById('modalImage').src = image;
             document.getElementById('paymentModal').classList.add('active');
         }
 
-        function closeModal() {
-            document.getElementById('paymentModal').classList.remove('active');
-        }
+        function closeModal() { document.getElementById('paymentModal').classList.remove('active'); }
 
         function approvePayment(id) {
-            if (confirm('To\'lovni tasdiqlaysizmi?')) {
-                alert('✅ To\'lov tasdiqlandi');
-                location.reload();
+            if (confirm('Tasdiqlaysizmi?')) {
+                fetch(`/api/admin/payments/${id}/approve`, { method: 'POST' }).then(() => loadData());
             }
         }
 
         function rejectPayment(id) {
-            if (confirm('To\'lovni rad etasizmi?')) {
-                alert('❌ To\'lov rad etildi');
-                location.reload();
+            if (confirm('Rad etasizmi?')) {
+                fetch(`/api/admin/payments/${id}/reject`, { method: 'POST' }).then(() => loadData());
             }
         }
 
-        function approveCurrent() {
-            approvePayment(currentPaymentId);
-            closeModal();
+        function approveCurrent() { approvePayment(currentPaymentId); closeModal(); }
+        function rejectCurrent() { rejectPayment(currentPaymentId); closeModal(); }
+
+        function loadData() {
+            fetch('/api/admin/stats').then(res => res.json()).then(data => {
+                document.getElementById('totalUsers').textContent = data.totalUsers;
+                document.getElementById('premiumUsers').textContent = data.premiumUsers;
+                document.getElementById('pendingPayments').textContent = data.pendingPayments;
+                document.getElementById('totalAmount').textContent = data.totalAmount + ' so\'m';
+            });
+
+            fetch('/api/admin/payments').then(res => res.json()).then(payments => {
+                const tbody = document.getElementById('recentPayments');
+                tbody.innerHTML = '';
+                payments.slice(0, 10).forEach(p => {
+                    const date = new Date(p.createdAt).toLocaleString();
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${p.login}</td>
+                        <td>${p.amount.toLocaleString()}</td>
+                        <td>${p.months} oy</td>
+                        <td>${date}</td>
+                        <td><span class="status-badge status-${p.status}">${p.status}</span></td>
+                        <td>
+                            <button class="btn-action btn-view" onclick="viewPayment('${p._id}', '${p.checkPhoto}', '${p.login}', '', ${p.amount}, ${p.months}, '${p.comment}')"><i class="fas fa-eye"></i></button>
+                            ${p.status === 'pending' ? `
+                            <button class="btn-action btn-approve" onclick="approvePayment('${p._id}')"><i class="fas fa-check"></i></button>
+                            <button class="btn-action btn-reject" onclick="rejectPayment('${p._id}')"><i class="fas fa-times"></i></button>
+                            ` : ''}
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            });
         }
 
-        function rejectCurrent() {
-            rejectPayment(currentPaymentId);
-            closeModal();
-        }
-
-        function toggleProfileMenu() {
-            // Profile menu toggle
-        }
-
-        // Load statistics from server
-        function loadStats() {
-            // API call to get real data
-            fetch('/api/admin/stats')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('totalUsers').textContent = data.totalUsers;
-                    document.getElementById('premiumUsers').textContent = data.premiumUsers;
-                    document.getElementById('pendingPayments').textContent = data.pendingPayments;
-                    document.getElementById('totalAmount').textContent = data.totalAmount + ' so\'m';
-                })
-                .catch(error => console.error('Error:', error));
-        }
-
-        // Load stats on page load
-        loadStats();
+        loadData();
     </script>
 </body>
 

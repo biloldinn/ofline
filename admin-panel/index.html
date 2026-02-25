@@ -25,15 +25,15 @@
             <form id="loginForm">
                 <div class="input-group">
                     <label><i class="fas fa-user"></i> Login</label>
-                    <input type="text" id="username" placeholder="Login" value="bilol006">
+                    <input type="text" id="username" placeholder="Login" required>
                 </div>
 
                 <div class="input-group">
                     <label><i class="fas fa-lock"></i> Parol</label>
-                    <input type="password" id="password" placeholder="Parol" value="bilol006">
+                    <input type="password" id="password" placeholder="Parol" required>
                 </div>
 
-                <button type="submit" class="btn-login">
+                <button type="submit" class="btn-login" id="loginBtn">
                     <i class="fas fa-sign-in-alt"></i> Kirish
                 </button>
             </form>
@@ -53,12 +53,32 @@
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
+            const btn = document.getElementById('loginBtn');
 
-            if (username === 'bilol006' && password === 'bilol006') {
-                window.location.href = 'dashboard.html';
-            } else {
-                alert('Login yoki parol noto\'g\'ri!');
-            }
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Kirilmoqda...';
+            btn.disabled = true;
+
+            fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        localStorage.setItem('admin_logged_in', 'true');
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        alert(data.message);
+                        btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Kirish';
+                        btn.disabled = false;
+                    }
+                })
+                .catch(err => {
+                    alert('Xatolik yuz berdi!');
+                    btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Kirish';
+                    btn.disabled = false;
+                });
         });
     </script>
 </body>
